@@ -65,6 +65,13 @@ pip install -r requirements.txt
 Acesse as interfaces:
 
 ### 2. Executando Localmente
+Digite no terminal (dentro da pasta):
+```bash
+python __init__.py
+```
+
+OU
+
 Inicie o FastAPI:
 
 ```bash
@@ -78,12 +85,6 @@ streamlit run streamlitPages/initial_page.py
 Inicie o MLflow:
 ```bash
 mlflow ui
-```
-
-OU, rode:
-Inicie o MLflow:
-```bash
-python __init__.py
 ```
 
 Acesse as interfaces:
