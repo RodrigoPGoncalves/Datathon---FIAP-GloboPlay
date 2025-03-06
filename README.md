@@ -39,7 +39,7 @@ Este projeto é uma aplicação que utiliza técnicas de machine learning (TF-ID
 
 ## Pré-requisitos
 
-- Python 3.9 ou superior.
+- Python 3.10 ou superior.
 - Docker (opcional, para rodar em containers).
 
 ## Como Executar
@@ -79,6 +79,13 @@ Inicie o MLflow:
 ```bash
 mlflow ui
 ```
+
+OU, rode:
+Inicie o MLflow:
+```bash
+python __init__.py
+```
+
 Acesse as interfaces:
 
 FastAPI: http://localhost:8000
