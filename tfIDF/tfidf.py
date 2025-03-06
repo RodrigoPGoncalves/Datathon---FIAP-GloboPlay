@@ -26,6 +26,7 @@ class TfIDF:
 
     def train_model(self):
         try:
+            os.makedirs(os.path.dirname(self.model_path), exist_ok=True)
             vectorizer = TfidfVectorizer(stop_words="english", max_features=300)
             df_all_news = self.obj_news_table.df_all_notices()
             tfidf_matrix = vectorizer.fit_transform(df_all_news["preprocesstext"])
