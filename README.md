@@ -48,7 +48,7 @@ Este projeto é uma aplicação que utiliza técnicas de machine learning (TF-ID
 
 Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/RodrigoPGoncalves/Datathon---FIAP-GloboPlay
 cd seu-repositorio
 ```
 
