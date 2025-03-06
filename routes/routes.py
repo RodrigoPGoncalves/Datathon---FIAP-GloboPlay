@@ -79,7 +79,6 @@ async def history(userID: Optional[str] = None):
             last_values_manager.set_last_engagement_list(engagement_list)
             
             newsLinks = news_table.get_news_links_with_id(history_corrigidos)
-            print(newsLinks)
             return JSONResponse(
                     status_code=200,  
                     content={"newsLink": newsLinks}
