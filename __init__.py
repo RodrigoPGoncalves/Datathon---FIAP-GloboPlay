@@ -59,7 +59,14 @@ def read_process_save(obj_pp, obj_table_users_origin, obj_table_news_origin, obj
     
     df_news_info_preprocess = obj_pp.run_pre_process(df_news_info, False)
     send_df_in_batch_to_db(df_news_info_preprocess, obj_table_news_preprocess)
-    
+
+def read_csv_preprocess(obj_table_users_preprocess,obj_table_news_preprocess):
+    path_users_info_preprocess = "./usersInfo_pre"
+    path_news_info_preprocess = "./newsInfo_pre"
+    df_users_info_preprocess, df_news_info_preprocess = read_origin_files(path_users_info_preprocess, path_news_info_preprocess)
+
+    send_df_in_batch_to_db(df_users_info_preprocess, obj_table_users_preprocess, True)
+    send_df_in_batch_to_db(df_news_info_preprocess, obj_table_news_preprocess)
 
 def train_tf_idf(obj_tf_idf,news):
     tfidf_matrix = obj_tf_idf.train_model(news["preprocesstext"])
@@ -101,16 +108,22 @@ def run_mlflow():
 
 def main():    
     # Iniciando DB
-    db_path = 'database.db'
+    import os
+    db_path = "database.db"
 
-    obj_table_users_origin = table_users_origin(db_path)
-    obj_table_news_origin = table_news_origin(db_path)
-    obj_table_users_preprocess = table_users_preprocess(db_path)
-    obj_table_news_preprocess = table_news_preprocess(db_path)
+    if not os.path.exists(db_path):
+        
+        obj_table_users_origin = table_users_origin(db_path)
+        obj_table_news_origin = table_news_origin(db_path)
+        obj_table_users_preprocess = table_users_preprocess(db_path)
+        obj_table_news_preprocess = table_news_preprocess(db_path)
+        read_csv_preprocess(obj_table_users_preprocess,obj_table_news_preprocess)
+    
+    
 
     #Criando Objetos
-    obj_pp = pre_process.preProcessFiles()
-    run_read_process_save_train(obj_pp, obj_table_users_origin, obj_table_news_origin, obj_table_users_preprocess, obj_table_news_preprocess)
+    #obj_pp = pre_process.preProcessFiles()
+    #run_read_process_save_train(obj_pp, obj_table_users_origin, obj_table_news_origin, obj_table_users_preprocess, obj_table_news_preprocess)
     
 
 if __name__ == '__main__':
@@ -118,7 +131,7 @@ if __name__ == '__main__':
     os.system("fuser -k 5000/tcp")
     os.system("fuser -k 8000/tcp")
     os.system("fuser -k 8501/tcp")
-    #main()
+    main()
     run_mlflow()
     run_fastapi()
     time.sleep(20)

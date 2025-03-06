@@ -72,4 +72,6 @@ class table_users_preprocess:
                         WHERE userId = ?
                         """, (id,)) 
             result = cursor.fetchone()
+            print("Resultado")
+            print(result)
             return result if result else (None,None)

@@ -70,11 +70,9 @@ class table_news_preprocess:
 
     def get_news_links_with_id(self,id_list):
         """Retorna o link da noticia dado o id"""
-
         with self.database.connect() as conn:
             cursor = conn.cursor()
             results = []
-
             for i in range(0, len(id_list), 20):
                 batch = id_list[i:i + 20]
                 query = f"""

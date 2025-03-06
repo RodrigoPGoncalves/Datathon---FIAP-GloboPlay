@@ -11,6 +11,7 @@ import dbSqlite.table_news_preprocess as table_news_preprocess
 from typing import Optional
 import json
 import tfIDF.tfidf as tf_idf
+import ast
 
 app = FastAPI()
 
@@ -66,10 +67,19 @@ async def history(userID: Optional[str] = None):
     if(userID != None):
         history, engagement_list = user_table.get_history_and_engagement_with_id(userID)
         if(history != [] and engagement_list != []):
-            history_corrigidos= [id.strip() for id in json.loads(history)]
+
+            history = history.strip("[]")
+            history_corrigidos = ast.literal_eval(history)
+            history_corrigidos = [id.strip() for id in eval(history_corrigidos)]
+
+            engagement_list = engagement_list.strip("[]")
+            engagement_list = ast.literal_eval(engagement_list)
+
             last_values_manager.set_last_history(history_corrigidos)
             last_values_manager.set_last_engagement_list(engagement_list)
+            
             newsLinks = news_table.get_news_links_with_id(history_corrigidos)
+            print(newsLinks)
             return JSONResponse(
                     status_code=200,  
                     content={"newsLink": newsLinks}
